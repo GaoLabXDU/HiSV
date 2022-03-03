@@ -2,7 +2,7 @@
 # Overview
 HiSV is a computational pipeline for structural variation detection from Hi-C data
 
-Structural variations (SVs) play an essential role in the evolution of human genomes and are asso-ciated with cancer genetics and rare disease.
+Structural variations (SVs) play an essential role in the evolution of human genomes and are associated with cancer genetics and rare disease.
 
 High-throughput chromosome capture (Hi-C) is a new technology that breaks through the limitations of the short-read-based whole-genome sequenc-ing (WGS) method and can be used to detect large-scale SVs. However, the identification of SVs from Hi-C data is still in the early stages with only a few methods available. Especially, no algorithm has been developed that can detect major types of SVs without control samples.
 
