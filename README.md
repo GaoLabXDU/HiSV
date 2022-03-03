@@ -32,7 +32,7 @@ git clone https://github.com/gaolabXDU/HiSV
 ```
 
 # Usage
-HiSV requires two input files, a tumor Hi-C data and a reference length file. HISV supports three types of Hi-C data as input including matrix file, bam file and fastq file. When Hi-C data are fastq files, you can use the shell script fastqtobam.sh to generate bam file. This step requires the installation of SAMtools (https://github.com/samtools/samtools), BWA-MEM(https://github.com/lh3/bwa) and HiCExplorer(https://github.com/deeptools/HiCExplorer). HiSV results consist of two files including intra-chromosomal SV events and inter-chromosomal translocation events. 
+HiSV requires two input files, a tumor Hi-C data and a reference length file. HISV supports three types of Hi-C data as input including matrix file, bam file and fastq file. When Hi-C data are fastq files, you can use the shell script fastqtobam.sh to generate bam file. This step requires the installation of BWA-MEM(https://github.com/lh3/bwa) and HiCExplorer(https://github.com/deeptools/HiCExplorer). HiSV results consist of two files including intra-chromosomal SV events and inter-chromosomal translocation events. 
 
 ## Ruuning command
 ```
