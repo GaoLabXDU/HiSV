@@ -32,7 +32,7 @@ git clone https://github.com/gaolabXDU/HiSV
 ```
 
 # Usage
-HiSV requires two input files, a tumor Hi-C data and a reference length file. HISV supports three types of Hi-C data as input including matrix file, bam file and fastq file. When Hi-C data are fastq files, you can use the shell script fastqtobam.sh to generate bam file. This step requires the installation of BWA-MEM(https://github.com/lh3/bwa) and HiCExplorer(https://github.com/deeptools/HiCExplorer). HiSV results consist of two files including intra-chromosomal SV events and inter-chromosomal translocation events. 
+HiSV requires two input files, a tumor Hi-C data and a reference length file. HISV supports five types of Hi-C data as input including matrix file, bam file, .cool file, .hic file and fastq file. When Hi-C data is a bam file, .cool file, or hic file, you can use the script ``hiccovert.py`` to generate matrix file. When Hi-C data are fastq files, you can use the shell script ``fastqtobam.sh`` to generate bam file. This step requires the installation of BWA-MEM(https://github.com/lh3/bwa) and HiCExplorer(https://github.com/deeptools/HiCExplorer). HiSV results consist of two files including intra-chromosomal SV events and inter-chromosomal translocation events. 
 
 ## Ruuning command
 ```
@@ -41,7 +41,7 @@ Options:
   -h|--help:  show this help message
   -o|--output:  path of output files
   -l|--length:  a reference length file
-  -f|--hicfile: Hi-C data (_.matrix or _.bam)
+  -f|--hicfile: path of high HiC matrix files (The matrix are named chr*.txt and chr*_chr*.txt)
   -b|--binsize: binsize of HiC matrix, default 50000
   -w|--window:  local region window, default 10
   -c|--cutoff:  select SV events, default 0.5
@@ -50,14 +50,44 @@ Options:
 ```
 python HiSV.py -o ../test_output 
                -l ../ref.len 
-               -f ../test.bam 
+               -f ../test_matrix/ 
                -b 50000
                -w 10
                -c 0.5
 ```
+## Output of HiSV
+In the HiSV ouput directory, you will find
+1. ``../test_output/HiSV_chr*_chr*_score.txt``  intermediate files used to identify the SV breakpoints 
+2. ``../test_output/HiSV_intra_SV_result.txt``  the final integrated intra-chromosomal SVs
+3. ``../test_output/HiSV_inter_SV_result.txt``  the final integrated inter-chromosomal SVs
 
- 
+```
+cat HiSV_inter_SV_result.txt
 
+chrom1  start_pos end_pos chrom2  start_pos end_pos
+chr3  169100000 171100000 chr10 77900000  79700000
+```
 
+## Annotation of SV type
+We provide type annotations for each structural variant.
+```
+Usage: SV_type.py [options]
+Options:
+  -h|--help:  show this help message
+  -f|--hicfile: path of HiC matrix files
+  -b|--binsize: binsize of HiC matrix, default 50000
+  -i|--input:  path of result file from HiSV
+```
 
-
+## Determination of SV breakpoints
+We provide accurate breakpoint identification when the Hi-C sample is a high-resolution data. 
+```
+Usage: determin_breakpoint.py [options]
+Options:
+  -h|--help:  show this help message
+  -o|--output:  path of output files
+  -f|--hicfile: path of high resolution HiC matrix files
+  -b|--binsize: binsize of HiC matrix, default 50000
+  -i|--input:  path of result file from HiSV
+  -p|--position:  the position chromosomal of SV event (inter/intra)
+```
