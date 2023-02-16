@@ -42,9 +42,10 @@ Options:
   -o|--output:  path of output files
   -l|--length:  a reference length file
   -f|--hicfile: path of high HiC matrix files (The matrix are named chr*.txt and chr*_chr*.txt)
-  -b|--binsize: binsize of HiC matrix, default 50000
+  -a|--intra_binsize: the binsize of intra chromosome, default 50000
+  -e|--inter_binsize: the binsize of inter chromosome, default 50000
   -w|--window:  local region window, default 10
-  -c|--cutoff:  select SV events, default 0.5
+  -c|--cutoff:  select SV events, default 0.6 (recommended parameters: [0.4, 0.5, 0.6]; low sequencing depth: set to 0.4 and high sequencing depth: set to 0.6 )
 ```
 ## Running the default example
 ```
