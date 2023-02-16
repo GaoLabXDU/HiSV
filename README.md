@@ -49,12 +49,13 @@ Options:
 ```
 ## Running the default example
 ```
-python HiSV.py -o ../test_output 
-               -l ../ref.len 
-               -f ../test_matrix/ 
-               -b 50000
+python HiSV.py -o ./test_data/test_output 
+               -l ../test_data/ref.len 
+               -f ../test_data/hic_data
+               -a 50000
+               -e 50000
                -w 10
-               -c 0.5
+               -c 0.6
 ```
 ## Output of HiSV
 In the HiSV ouput directory, you will find
