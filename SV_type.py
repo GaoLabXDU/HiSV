@@ -36,7 +36,7 @@ def cal_slope(matrix):
 if __name__ == '__main__':
 
     parser = OptionParser()
-    parser.add_option('-f', '--hicfile', default='/media/li/Data/GM12878/K562_remove_gap/', help='path of hic matrix file')
+    parser.add_option('-f', '--hicfile', default='/media/li/Data/GM12878/K562_remove_gap/', help='path of hic matrix file (chr*.txt)')
     parser.add_option('-b', '--binsize', type='int', default=50000)
     parser.add_option('-i', '--input',  default='/media/li/Data/GM12878/K562_matrix/K562_combine_result.txt', help="path of result file from HiSV")
     (opts, args) = parser.parse_args()
