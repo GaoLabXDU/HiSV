@@ -35,7 +35,7 @@ conda activate HiSV
 pip install hisv -U
 conda install hic-straw
 ```
-Note: if an error related to libffi occurs during installation, please try the following command, and recreate the hisv environment and install it.
+Note: If an error related to libffi occurs during the installation or use of ``hic-straw``, please try the following command, and recreate the hisv environment and install it.
 ```
 conda install -c anaconda libffi
 
