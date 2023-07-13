@@ -27,6 +27,9 @@ python: tested with version 3.7
 # Installation
 HiSV and all the dependencies can be installed using pip:
 ```
+conda config --add channels defaults
+conda config --add channels conda-forge
+conda config --add channels bioconda
 conda create -n HiSV python=3.7
 conda activate HiSV
 pip install hisv -U
