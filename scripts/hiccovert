@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+from optparse import OptionParser
+import hisv.coolToMatrix as coolToM
+import hisv.hicToMatrix as hicToM
+import hisv.bamToMatrix as bamToM
+import os
+import argparse, sys
+import datetime
+
+
+def getargs():
+
+    ## Construct an ArgumentParser object for command-line arguments
+    parser = argparse.ArgumentParser(description='''Convert Hi-C files in different formats 
+                                                    into matrix form as HiSV input.''',
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument('--hic_file',
+                        help='Hi-C file in different format.')
+    parser.add_argument('--binsize', type=int, default=50000, help='Bin size of final Hi-C contact matrix.')
+    parser.add_argument('--format', help='Format of input Hi-C file. This type needs to included '
+                                         'in [mcool, cool, hic, bam].')
+    parser.add_argument('--ref', help='Reference Genome length file')
+    parser.add_argument('--cores', type=int, help='The number of cores used for parallel computing')
+    parser.add_argument('--output', help='''Output file path.''')
+    parser.add_argument('--name', help='''Sample name''')
+
+    ## Parse the command-line arguments
+    commands = sys.argv[1:]
+    if not commands:
+        commands.append('-h')
+    args = parser.parse_args(commands)
+    return args, commands
+
+
+def run():
+    start_t = datetime.datetime.now()
+    args, commands = getargs()
+    output = args.output
+    if not os.path.exists(output):
+        os.makedirs(output)
+    hicfile = args.hic_file
+    ref_file = args.ref
+    name = args.name
+    n_cores = args.cores
+    binSize = args.binsize
+    covert_type = args.format
+    if not os.path.exists(hicfile):
+        print("Hicfile does not exist.")
+        sys.exit(-1)
+
+    if not os.path.exists(ref_file):
+        print("reference file does not exist.")
+        sys.exit(-1)
+
+    # Provide format conversion of hic files in the following formats
+    type_list = ['mcool', 'cool', 'hic', 'bam']
+    if covert_type not in type_list:
+        print("The type of the input hi-c file should be hic, bam, cool or mcool.")
+    # if covert_type not in type_list:
+    #     print("The HiC format of the input is wrong")
+    if covert_type == 'mcool':
+        hicfile = hicfile + '::/resolutions/' + str(binSize)
+        coolToM.coolToMatrix(hicfile, ref_file, binSize, output, name, n_cores)
+    elif covert_type == 'cool':
+        coolToM.coolToMatrix(hicfile, ref_file, binSize, output, name, n_cores)
+    elif covert_type == 'hic':
+        hicToM.hicToMatrix(hicfile, binSize, ref_file, output, name, n_cores)
+    else:
+        bamToM.bamToMatrix(hicfile, ref_file, binSize, output, name, n_cores)
+    end_t = datetime.datetime.now()
+    elapsed_sec = (end_t - start_t).total_seconds()
+    print("running time: " + "{:.2f}".format(elapsed_sec) + " seconds")
+if __name__ == '__main__':
+    run()
