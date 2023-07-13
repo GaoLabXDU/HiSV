@@ -35,6 +35,11 @@ conda activate HiSV
 pip install hisv -U
 conda install hic-straw
 ```
+Note: if an error related to libffi occurs during installation, please try the following command, and recreate the hisv environment and install it.
+```
+conda install -c anaconda libffi
+
+```
 # Overview
 HiSV is distributed with four scripts. You can learn the basic usage of each script by typing command [-h] in a terminal window, where "command" is one of the following script names:
 * __hiccovert__  
