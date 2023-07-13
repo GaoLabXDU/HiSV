@@ -172,7 +172,9 @@ chr9    133550000       134000000       chr13   93850000        94200000
 chr9    133550000       133950000       chr13   108350000       108950000
 ```
 ## Annotation of SV type
-The next step is type annotations for each structural variant. Here, GC content, mappability and the number of restriction sites files are required as inputs to obtain a normalized coverage profile.
+The next step is type annotations for each structural variant. Here, GC content, mappability and the number of restriction sites files are required as inputs to obtain a normalized coverage profile. These files are provided in /HiSV_test_data/normData, and some files with the extension of .gz need to be decompressed. Users can use the ``gzip -dv *`` command to decompress files.  
+### Note  
+This step only for intra-chromosomal SV events.
 ```
 usage: SV_type [-h] [--hic_file HIC_FILE] [--gc_file GC_FILE]
                [--map_file MAP_FILE] [--RE_file RE_FILE] [--binsize BINSIZE]
@@ -248,7 +250,7 @@ chr9    10000   chr9    25000   2
 chr9    20000   chr9    25000   4
 chr9    25000   chr9    25000   3
 ```
-The command to run the test sample is：
+These high-reolution hi-c files are provided in ``/HiSV_test_data/Matrix_data/Intra_matrix`` and ``/HiSV_test_data/Matrix_data/Intra_matrix`` , and these files need to be decompressed. Users can use the ``gzip -dv *`` command to decompress files. The command to run the test sample is：
 ```
 $ determin_breakpoint --hic_file /mnt/d/HiSV_test_data/Matrix_data/Intra_matrix --binsize 5000 --HiSV_result  /mnt/d/HiSV_test_data/result/HiSV_intra_SV_result.txt --name K562 --output /mnt/d/HiSV_test_data/result
 ```
