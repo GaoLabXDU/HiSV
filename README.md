@@ -144,7 +144,7 @@ optional arguments:
 ### Note
 By default, we set the local region window to 10, the regularization parameter to 0.2, and the cut-off values to 0.5 and 0.6 for Hi-C data with a sequencing depth of less than 100 million contacts and nearly 100 million contacts, respectively. We have found that these parameter settings achieve a good balance between sensitivity and precision for most test datasets.  
 The local region is approcimately 1Mb could avoid the normal 3D organization having high salience. So we set the local region window to 10 for 50Kb resolution Hi-C data. When the resolution of Hi-C data is 100kb, we recommend setting window to 5.  
-If your Hi-C data has a higher sequencing depth, we recommend increasing the cut-off value or the regularization parameter accordingly. 
+If your Hi-C data has a higher sequencing depth, we recommend increasing the cut-off value or the regularization parameter (eg. 0.4) accordingly. 
 
 Here, we provide an example Hi-C dataset to guide users through the whole process. The dataset contained two chromsomes, 9 and 13, and these two chromosomes in the K562 sample covered some of SVs. The command to run the test sample is：
 ```
