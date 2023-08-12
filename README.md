@@ -193,9 +193,9 @@ Define the type of SV event recognized by each HiSV
 optional arguments:
   -h, --help            show this help message and exit
   --hic_file HIC_FILE   Hi-C contact matrix file. (default: None)
-  --gc_file GC_FILE     Hi-C contact matrix file. (default: None)
-  --map_file MAP_FILE   Hi-C contact matrix file. (default: None)
-  --RE_file RE_FILE     Hi-C contact matrix file. (default: None)
+  --gc_file GC_FILE     GC contene file of the reference genome. (default: None)
+  --map_file MAP_FILE   Mappability file of the reference genome. (default: None)
+  --RE_file RE_FILE     RE sites file of the reference genome. (default: None)
   --binsize BINSIZE     Bin size of final Hi-C contact matrix. (default:
                         50000)
   --HiSV_result HISV_RESULT
