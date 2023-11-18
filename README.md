@@ -114,8 +114,8 @@ When the matrix files are prepared, the user can use the ``HiSV`` script to iden
 usage: HiSV [-h] [--inter_hic INTER_HIC] [--intra_hic INTRA_HIC]
             [--intra_binsize INTRA_BINSIZE] [--inter_binsize INTER_BINSIZE]
             [--window WINDOW] [--regularization REGULARIZATION]
-            [--cutoff CUTOFF] [--ref REF] [--name NAME] [--cores CORES]
-            [--output OUTPUT]
+            [--inter_cutoff INTER_CUTOFF] [--intra_cutoff INTRA_CUTOFF]
+            [--ref REF] [--name NAME] [--cores CORES] [--output OUTPUT]
 
 Identification of SVs based on Hi-C interaction matrix.
 
@@ -134,7 +134,12 @@ optional arguments:
   --window WINDOW       Local region window. (default: 10)
   --regularization REGULARIZATION
                         The regularization parameter (default: 0.2)
-  --cutoff CUTOFF       Threshold for filtering SV segments (default: 0.6)
+  --inter_cutoff INTER_CUTOFF
+                        Threshold for filtering inter-SV segments (default:
+                        0.6)
+  --intra_cutoff INTRA_CUTOFF
+                        Threshold for filtering intra-SV segments (default:
+                        0.6)
   --ref REF             Reference Genome length file (default: None)
   --name NAME           Sample name (default: None)
   --cores CORES         The number of cores used for parallel computing
@@ -148,7 +153,7 @@ If your Hi-C data has a higher sequencing depth, we recommend increasing the cut
 
 Here, we provide an example Hi-C dataset to guide users through the whole process. The dataset contained two chromsomes, 9 and 13, and these two chromosomes in the K562 sample covered some of SVs. The command to run the test sample is：
 ```
-$ HiSV --inter_hic /mnt/d/HiSV_test_data/Matrix_data/Inter_matrix --intra_hic /mnt/d/HiSV_test_data/Matrix_data/Intra_matrix --ref /mnt/d/HiSV_test_data/ref.len --name K562 --cores 20 --output /mnt/d/HiSV_test_data/result --cutoff 0.6
+$ HiSV --inter_hic /mnt/d/HiSV_test_data/Matrix_data/Inter_matrix --intra_hic /mnt/d/HiSV_test_data/Matrix_data/Intra_matrix --ref /mnt/d/HiSV_test_data/ref.len --name K562 --cores 20 --output /mnt/d/HiSV_test_data/result --inter_cutoff 0.6 --intra_cutoff 0.6
 ```
 
 ### Output of HiSV
@@ -180,24 +185,27 @@ chr9    133550000       134000000       chr13   93850000        94200000
 chr9    133550000       133950000       chr13   108350000       108950000
 ```
 ## Annotation of SV type
-The next step is type annotations for each structural variant. Here, GC content, mappability and the number of restriction sites files are required as inputs to obtain a normalized coverage profile. These files are provided in /HiSV_test_data/normData, and some files with the extension of .gz need to be decompressed. Users can use the ``gzip -dv *`` command to decompress files.  
+The next step is type annotations for each structural variant. Here, GC content, mappability and the number of restriction sites files are required as inputs to obtain a normalized coverage profile. When the Hi-C experiment does not use restriction enzyme, the RE file does not need to be provide (--withoutRE). These files are provided in /HiSV_test_data/normData, and some files with the extension of .gz need to be decompressed. Users can use the ``gzip -dv *`` command to decompress files.  
 ### Note  
 This step only for intra-chromosomal SV events.
 ```
 usage: SV_type [-h] [--hic_file HIC_FILE] [--gc_file GC_FILE]
                [--map_file MAP_FILE] [--RE_file RE_FILE] [--binsize BINSIZE]
-               [--HiSV_result HISV_RESULT] [--name NAME]
+               [--withoutRE] [--HiSV_result HISV_RESULT] [--name NAME]
 
 Define the type of SV event recognized by each HiSV
 
 optional arguments:
   -h, --help            show this help message and exit
   --hic_file HIC_FILE   Hi-C contact matrix file. (default: None)
-  --gc_file GC_FILE     GC contene file of the reference genome. (default: None)
-  --map_file MAP_FILE   Mappability file of the reference genome. (default: None)
+  --gc_file GC_FILE     GC contene file of the reference genome. (default:
+                        None)
+  --map_file MAP_FILE   Mappability file of the reference genome. (default:
+                        None)
   --RE_file RE_FILE     RE sites file of the reference genome. (default: None)
   --binsize BINSIZE     Bin size of final Hi-C contact matrix. (default:
                         50000)
+  --withoutRE
   --HiSV_result HISV_RESULT
                         Result file from HiSV (default: None)
   --name NAME           Sample name (default: None)
@@ -205,6 +213,10 @@ optional arguments:
 The command to run the test sample is：
 ```
 $ SV_type --hic_file /mnt/d/HiSV_test_data/Matrix_data/Intra_matrix --gc_file /mnt/d/HiSV_test_data/normData/hg19_1kb_GC.bw --map_file /mnt/d/HiSV_test_data/normData/hg19_mappability_100mer.1kb.bw --RE_file /mnt/d/HiSV_test_data/normData/hg19.HindIII.npz --binsize 50000 --HiSV_result /mnt/d/HiSV_test_data/result/HiSV_intra_SV_result.txt --name K562
+```
+When the Hi-C experiment does not use restriction enzyme：
+```
+$ SV_type --hic_file /mnt/d/HiSV_test_data/Matrix_data/Intra_matrix --gc_file /mnt/d/HiSV_test_data/normData/hg19_1kb_GC.bw --map_file /mnt/d/HiSV_test_data/normData/hg19_mappability_100mer.1kb.bw --withoutRE --binsize 50000 --HiSV_result /mnt/d/HiSV_test_data/result/HiSV_intra_SV_result.txt --name K562
 ```
 ### Output of SV_type
 SV_type script outputs each SV type directly. For example:
